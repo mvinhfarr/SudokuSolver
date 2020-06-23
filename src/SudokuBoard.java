@@ -20,6 +20,7 @@ public class SudokuBoard {
 
     private int[][] board; //unsolved sudoku board as 2d array -> 0 = unknown
     private int size; //num rows or cols
+    private int base;
     
     private int[][] ecArr;
     /*
@@ -53,6 +54,7 @@ public class SudokuBoard {
         Scanner input = new Scanner(new File("data/" + boardFile));
 
         size = input.nextInt();
+        base = (int) Math.sqrt(size);
         board = new int[size][size];
         solvedBoard = new int[size][size];
         input.nextLine();
@@ -62,12 +64,7 @@ public class SudokuBoard {
 
             for (int j = 0; j < size; j++) {
                 try {
-                    int val = -1;
-                    if(size <= 9 || size >= 49) {
-                        val = Integer.parseInt(tempRow[j].trim(), 10);
-                    } else if(size >= 16 && size <= 36) {
-                        val = Integer.parseInt(tempRow[j].trim(), size);
-                    }
+                    int val = Integer.parseInt(tempRow[j].trim(), 10);
 
                     if (val >= 0 && val <= size) {
                         board[i][j] = val;
@@ -77,6 +74,10 @@ public class SudokuBoard {
                 } catch (NumberFormatException e) {
                     if(tempRow[j].isBlank()) {
                         board[i][j] = 0;
+                    } else if(base == 4 || base == 5) {
+                        int val = Integer.parseInt(tempRow[j].trim(), size+1);
+                        if(val >= 0 && val <= size) board[i][j] = val;
+                        else throw new NumberFormatException("value out of boards at: " + i + ", " + j);
                     } else {
                         //System.out.printf("wrong format at [%d][%d]%n", i, j);
                         throw new NumberFormatException("value unmappable at: " + i + ", " + j);
@@ -100,7 +101,6 @@ public class SudokuBoard {
     //fill in the constraints each row fills in the exact cover
     //each row satisfies 4 constraints, 1 from each set
     private void fillECRow(int row, int col, int num) {
-        int base = (int) Math.sqrt(size);
         int sizeSq = size*size;
                 
         int rowIndex = row*sizeSq + col*size + num;
@@ -150,8 +150,9 @@ public class SudokuBoard {
 
     //solve sudoku board using simple brute force algorithm
     public void solveWithBruteForce() {
-        BruteForceSolver brute = new BruteForceSolver(board);
-        solvedBoard = brute.getSolved();
+        BruteForceSolver bfs = new BruteForceSolver(board);
+        bfs.solve();
+        solvedBoard = bfs.getSolved();
     }
 
     public int[][] getBoard() {
@@ -166,18 +167,7 @@ public class SudokuBoard {
         return solvedBoard;
     }
 
-    //STATIC FUNCTIONS --> TO ELIMINATE?
-    //creates a deep copy of a 2d int array (not used)
-    public static int[][] int2dArrDeepCopy(int[][] a) {
-        int[][] copy = new int[a.length][];
-        for(int i = 0; i < a.length; i++) {
-            int tempLength = a[i].length;
-            copy[i] = new int[tempLength];
-            System.arraycopy(a[i], 0, copy[i], 0, tempLength);
-        }
-        return copy;
-    }
-
+    //STATIC FUNCTION --> TO ELIMINATE?
     //print a 2d array separated by spaces to console
     public static void int2dArrPrint(PrintStream out, int[][] arr) {
         for(int[] row: arr) {
@@ -188,5 +178,4 @@ public class SudokuBoard {
         }
         out.println();
     }
-
 }

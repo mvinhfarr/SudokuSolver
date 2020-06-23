@@ -27,9 +27,17 @@ public class Sandbox {
         String fourSolved = "fourXfourSolved.txt";
         //demoSudokuSolver(fourBoard, fourSolved, true, false);
 
+        String fourManySolutionsBoard = "fourManySolutions.txt";
+        String fourManySolutionsSolved = "fourManySolutionsSolved.txt";
+        demoSudokuSolver(fourManySolutionsBoard, fourManySolutionsSolved, true, false);
+
         String sixteenBoard = "sixteenXsixteen.txt";
         String sixteenSolved = "sixteenSolved.txt";
-        demoSudokuSolver(sixteenBoard, sixteenSolved, true, false);
+        //demoSudokuSolver(sixteenBoard, sixteenSolved, true, false);
+
+        String sixteen2Board = "sixteen2.txt";
+        String sixteen2Solved = "sixteen2Solved.txt";
+        //demoSudokuSolver(sixteen2Board, sixteen2Solved, true, false);
 
         //SudokuFrame sf = new SudokuFrame();
     }
@@ -52,7 +60,6 @@ public class Sandbox {
 
         if(print) {
             sb.printSudokuBoard(sb.getSolvedBoard(), false);
-            sb.printSudokuBoard(sb.getSolvedBoard(), false);
         }
 
         System.out.println("Algorithm X solve time in nanoseconds  : " + elapsedTime1);
@@ -68,7 +75,6 @@ public class Sandbox {
         long elapsedTime2 = endTime2-startTime2;
 
         if(print) {
-            sb.printSudokuBoard(sb.getSolvedBoard(), false);
             sb.printSudokuBoard(sb.getSolvedBoard(), false);
         }
 

@@ -15,17 +15,15 @@ public class BruteForceSolver {
         this.SIZE = board.length;
         this.BASE = (int) Math.sqrt(SIZE);
 
-        this.solved = SudokuBoard.int2dArrDeepCopy(board);
+        this.solved = int2dArrDeepCopy(board);
 
         this.valid = true; //if solved[][] is currently a valid sudoku board
         this.lastVal = 0; //value in last square
         this.row = 0; //current row
         this.col = 0; //current col
-
-        solve();
     }
 
-    private void solve() {
+    public void solve() {
         while(row < SIZE) {
             while(col < SIZE) {
                 if(board[row][col] == 0) { //current square unknown
@@ -133,5 +131,16 @@ public class BruteForceSolver {
 
     public int[][] getSolved() {
         return solved;
+    }
+
+    //creates a deep copy of a 2d int array (not used)
+    public static int[][] int2dArrDeepCopy(int[][] a) {
+        int[][] copy = new int[a.length][];
+        for(int i = 0; i < a.length; i++) {
+            int tempLength = a[i].length;
+            copy[i] = new int[tempLength];
+            System.arraycopy(a[i], 0, copy[i], 0, tempLength);
+        }
+        return copy;
     }
 }
