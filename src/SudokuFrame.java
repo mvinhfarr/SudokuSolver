@@ -2,43 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SudokuFrame {
-    private JPanel p;
-
-    private int size = 3;
+    private JFrame f;
+    private SudokuGrid grid;
 
     public SudokuFrame() {
-        JFrame f = new JFrame("Sudoku Solver");
+        this.f = new JFrame("Sudoku Solver");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(600, 600);
-        //f.pack();
-        f.setVisible(true);
 
         Container c = f.getContentPane();
 
+        this.grid = new SudokuGrid(9);
 
-        p = new JPanel(new GridLayout(size,size));
-        p.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+        c.add(grid);
 
-        // drawGrid();
-
-        c.add(p);
-
-
-
+        f.pack();
+        f.setVisible(true);
     }
-
-    private void drawGrid() {
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                JPanel subGrid = new JPanel(new GridLayout(size, size));
-                subGrid.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-                p.add(subGrid);
-            }
-        }
-    }
-
-    //private JTextField square() {
-
-    //}
-
 }

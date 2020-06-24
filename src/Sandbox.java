@@ -29,7 +29,7 @@ public class Sandbox {
 
         String fourManySolutionsBoard = "fourManySolutions.txt";
         String fourManySolutionsSolved = "fourManySolutionsSolved.txt";
-        demoSudokuSolver(fourManySolutionsBoard, fourManySolutionsSolved, true, false);
+        //demoSudokuSolver(fourManySolutionsBoard, fourManySolutionsSolved, true, false);
 
         String sixteenBoard = "sixteenXsixteen.txt";
         String sixteenSolved = "sixteenSolved.txt";
@@ -39,7 +39,7 @@ public class Sandbox {
         String sixteen2Solved = "sixteen2Solved.txt";
         //demoSudokuSolver(sixteen2Board, sixteen2Solved, true, false);
 
-        //SudokuFrame sf = new SudokuFrame();
+        SudokuFrame sf = new SudokuFrame();
     }
 
 
