@@ -9,6 +9,7 @@
 * 12 June 2020
 */
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -21,42 +22,55 @@ public class SudokuBoard {
     private int[][] board; //unsolved sudoku board as 2d array -> 0 = unknown
     private int size; //num rows or cols
     private int base;
-    
-    private int[][] ecArr;
+
     /*
-    * sudoku board converted into a exact cover
-    * rows: possibilities; cols: constraints
-    * for a 9x9:
-        * 729 rows -> 81 squares can be any of 9 possibilities
-        * 324 cols -> 81 row-col, 81 row-num, 81 col-num, & 81 box-num constraints
-    *
-    * 4 sets of constraints for a sudoku board:
-        * row-col: each square (r1c1, r1c2... r2c1, r2c2...) must have only one number
-        * row-num: each row (r1-r9) must have nums 1-9 once and only once (r1#1, r1#2... r2#1, r2#2)
-        * col-num: same as row-num but for columns
-        * box-num: each 3x3 sub square must have nums 1-9 once and only once (b1#1, b1#2...)
-    */
+     * sudoku board converted into a exact cover
+     * rows: possibilities; cols: constraints
+     * for a 9x9:
+     * 729 rows -> 81 squares can be any of 9 possibilities
+     * 324 cols -> 81 row-col, 81 row-num, 81 col-num, & 81 box-num constraints
+     *
+     * 4 sets of constraints for a sudoku board:
+     * row-col: each square (r1c1, r1c2... r2c1, r2c2...) must have only one number
+     * row-num: each row (r1-r9) must have nums 1-9 once and only once (r1#1, r1#2... r2#1, r2#2)
+     * col-num: same as row-num but for columns
+     * box-num: each 3x3 sub square must have nums 1-9 once and only once (b1#1, b1#2...)
+     */
+    private int[][] ecArr;
 
     private int[][] solvedBoard; //solved sudoku board
 
-    //RIGHT NOW: only can create SudokuBoard object from file source
-    //FUTURE: create SudokuBoard from SudoGUI class
-    public SudokuBoard(String boardFile, String outputFile) {
-        this.boardFile = boardFile;
-        this.outputFile = outputFile;
+    //initialize board[][] from SudokuGrid
+    public SudokuBoard(JTextField[][] grid) {
+        this.size = grid.length;
+        this.base = (int) Math.sqrt(size);
+
+        this.board = new int[size][size];
+        this.solvedBoard = new int[size][size];
+
+        for(int i = 0; i < grid.length; i++) {
+             for(int j = 0; j < grid[0].length; j++) {
+                 String s = grid[i][j].getText();
+             }
+         }
     }
 
     //initialize board[][] from a file in dir "data"
     //first line must indicate size as total num rows
     //delimiter = ","
     //will handle spaces or zeros as unfilled values
-    public void generateBoardFromFile() throws FileNotFoundException {
+    public SudokuBoard(String boardFile, String outputFile) throws FileNotFoundException {
+        this.boardFile = boardFile;
+        this.outputFile = outputFile;
+
         Scanner input = new Scanner(new File("data/" + boardFile));
 
-        size = input.nextInt();
-        base = (int) Math.sqrt(size);
-        board = new int[size][size];
-        solvedBoard = new int[size][size];
+        this.size = input.nextInt();
+        this.base = (int) Math.sqrt(size);
+
+        this.board = new int[size][size];
+        this.solvedBoard = new int[size][size];
+
         input.nextLine();
 
         for (int i = 0; i < size; i++) {
@@ -87,9 +101,9 @@ public class SudokuBoard {
         }
     }
 
-    //print the solved sudoku board to a file in dir "results"
+    //if toFile: print the solved sudoku board to file in dir "results"
+    //else: print to System.out
     //prints using PrintStream (TO CHANGE) and separates with space
-    //calls on static int2dArrPrint
     public void printSudokuBoard(int[][] arr, boolean toFile) throws FileNotFoundException {
         PrintStream out;
         if(toFile) out = new PrintStream(new File("results/" + outputFile));

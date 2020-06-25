@@ -38,8 +38,6 @@ public class Sandbox {
         String sixteen2Board = "sixteen2.txt";
         String sixteen2Solved = "sixteen2Solved.txt";
         //demoSudokuSolver(sixteen2Board, sixteen2Solved, true, false);
-
-        SudokuFrame sf = new SudokuFrame();
     }
 
 
@@ -47,7 +45,6 @@ public class Sandbox {
         System.out.println(boardFile);
 
         SudokuBoard sb = new SudokuBoard(boardFile, outputFile);
-        sb.generateBoardFromFile();
 
         long startTime1 = System.nanoTime();
 

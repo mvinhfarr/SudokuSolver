@@ -19,4 +19,8 @@ public class SudokuFrame {
         f.pack();
         f.setVisible(true);
     }
+
+    public static void main(String[] args) {
+        SudokuFrame sf = new SudokuFrame();
+    }
 }
