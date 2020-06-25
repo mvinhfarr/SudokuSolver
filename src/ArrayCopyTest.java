@@ -47,16 +47,28 @@ public class ArrayCopyTest {
         long acElapsedTime = acEndTime-acStartTime;
         long modElapsedTime = modEndTime-modStartTime;
 
-        SudokuBoard.int2dArrPrint(new PrintStream(System.out), cloneCopy);
+        int2dArrPrint(new PrintStream(System.out), cloneCopy);
         System.out.println("Solve time in nanoseconds  : " + cloneElapsedTime);
         System.out.println("Solve time in milliseconds : " + cloneElapsedTime/1000000);
 
-        SudokuBoard.int2dArrPrint(new PrintStream(System.out), arraycopyCopy);
+        int2dArrPrint(new PrintStream(System.out), arraycopyCopy);
         System.out.println("Solve time in nanoseconds  : " + acElapsedTime);
         System.out.println("Solve time in milliseconds : " + acElapsedTime/1000000);
 
-        SudokuBoard.int2dArrPrint(new PrintStream(System.out), modCopy);
+        int2dArrPrint(new PrintStream(System.out), modCopy);
         System.out.println("Solve time in nanoseconds  : " + modElapsedTime);
         System.out.println("Solve time in milliseconds : " + modElapsedTime/1000000);
+    }
+
+    //STATIC FUNCTION --> TO ELIMINATE?
+    //print a 2d array separated by spaces to console
+    public static void int2dArrPrint(PrintStream out, int[][] arr) {
+        for(int[] row: arr) {
+            for(int c: row) {
+                out.print(c + " ");
+            }
+            out.println();
+        }
+        out.println();
     }
 }

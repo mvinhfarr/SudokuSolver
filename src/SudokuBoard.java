@@ -95,7 +95,13 @@ public class SudokuBoard {
         if(toFile) out = new PrintStream(new File("results/" + outputFile));
         else out = new PrintStream(System.out);
 
-        int2dArrPrint(out, arr);
+        for(int[] row: arr) {
+            for(int c: row) {
+                out.print(c + " ");
+            }
+            out.println();
+        }
+        out.println();
     }
     
     //fill in the constraints each row fills in the exact cover
@@ -165,17 +171,5 @@ public class SudokuBoard {
 
     public int[][] getSolvedBoard() {
         return solvedBoard;
-    }
-
-    //STATIC FUNCTION --> TO ELIMINATE?
-    //print a 2d array separated by spaces to console
-    public static void int2dArrPrint(PrintStream out, int[][] arr) {
-        for(int[] row: arr) {
-            for(int c: row) {
-                out.print(c + " ");
-            }
-            out.println();
-        }
-        out.println();
     }
 }

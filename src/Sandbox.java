@@ -99,14 +99,14 @@ public class Sandbox {
         System.out.println(ec_file);
 
         System.out.println("Unsolved Exact Cover:");
-        SudokuBoard.int2dArrPrint(new PrintStream(System.out), simpleEC.getArr());
+        ArrayCopyTest.int2dArrPrint(new PrintStream(System.out), simpleEC.getArr());
 
         System.out.println("Solution rows:");
         System.out.println(Arrays.toString(simpleEC.getSolutionRows()));
         System.out.println();
 
         System.out.println("Reverse ordered, solved Exact Cover:");
-        SudokuBoard.int2dArrPrint(new PrintStream(System.out), simpleEC.getSolution());
+        ArrayCopyTest.int2dArrPrint(new PrintStream(System.out), simpleEC.getSolution());
 
         System.out.println("Solve time in nanoseconds  : " + elapsedTime);
         System.out.println("Solve time in milliseconds : " + elapsedTime/1000000);
