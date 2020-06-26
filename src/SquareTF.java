@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class SquareTF extends JTextField {
@@ -20,6 +22,7 @@ public class SquareTF extends JTextField {
         this.isFinal = false;
 
         setEditable(true);
+
         setFormat();
     }
 

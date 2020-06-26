@@ -1,12 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
 public class SudokuGrid extends JPanel{
     private JTextField[][] grid;
 
-    private final int size;
-    private final int base;
+    public final int size;
+    public final int base;
 
     private JPanel[][] subGridPanels;
     //private JPanel boardPanel;
@@ -28,6 +29,8 @@ public class SudokuGrid extends JPanel{
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 JTextField square = new SquareTF(i, j);
+                //addKeyListener(new SquareKeyListener());
+                ((AbstractDocument) square.getDocument()).setDocumentFilter(new SquareDocFilter(size));
 
                 grid[i][j] = square;
             }

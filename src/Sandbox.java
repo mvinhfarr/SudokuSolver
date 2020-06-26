@@ -44,7 +44,7 @@ public class Sandbox {
     public static void demoSudokuSolver(String boardFile, String outputFile, boolean print, boolean save) throws FileNotFoundException {
         System.out.println(boardFile);
 
-        SudokuBoard sb = new SudokuBoard(boardFile, outputFile);
+        SudokuSolver sb = new SudokuSolver(boardFile, outputFile);
 
         long startTime1 = System.nanoTime();
 

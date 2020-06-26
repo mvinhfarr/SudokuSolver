@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class SudokuBoard {
+public class SudokuSolver {
     private String boardFile; //unsolved read file found in dir "data"
     private String outputFile; //solved board write to dir "results"
 
@@ -40,8 +40,8 @@ public class SudokuBoard {
 
     private int[][] solvedBoard; //solved sudoku board
 
-    //initialize board[][] from SudokuGrid
-    public SudokuBoard(JTextField[][] grid) {
+    //initialize board[][] from SudokuGrid !!TO CHANGE!!! NOT WORKING
+    public SudokuSolver(JTextField[][] grid) {
         this.size = grid.length;
         this.base = (int) Math.sqrt(size);
 
@@ -51,6 +51,7 @@ public class SudokuBoard {
         for(int i = 0; i < grid.length; i++) {
              for(int j = 0; j < grid[0].length; j++) {
                  String s = grid[i][j].getText();
+                 System.out.print(s);
              }
          }
     }
@@ -59,7 +60,8 @@ public class SudokuBoard {
     //first line must indicate size as total num rows
     //delimiter = ","
     //will handle spaces or zeros as unfilled values
-    public SudokuBoard(String boardFile, String outputFile) throws FileNotFoundException {
+    //handles base 10, 16, & 25
+    public SudokuSolver(String boardFile, String outputFile) throws FileNotFoundException {
         this.boardFile = boardFile;
         this.outputFile = outputFile;
 
