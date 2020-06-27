@@ -1,18 +1,19 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 
 public class SudokuGrid extends JPanel{
     private JTextField[][] grid;
 
-    public final int size;
-    public final int base;
+    private final int size;
+    private final int base;
 
     private JPanel[][] subGridPanels;
     //private JPanel boardPanel;
 
-    public SudokuGrid(int size) {
+    public SudokuGrid(int size) throws BadLocationException {
         this.grid = new JTextField[size][size];
         this.size = size;
         this.base = (int) Math.sqrt(size);
@@ -25,12 +26,10 @@ public class SudokuGrid extends JPanel{
         initPanGrid();
     }
 
-    private void initTFGrid() {
+    private void initTFGrid() throws BadLocationException {
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                JTextField square = new SquareTF(i, j);
-                //addKeyListener(new SquareKeyListener());
-                ((AbstractDocument) square.getDocument()).setDocumentFilter(new SquareDocFilter(size));
+                JTextField square = new SquareTF(i, j, size);
 
                 grid[i][j] = square;
             }

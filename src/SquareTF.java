@@ -1,34 +1,46 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class SquareTF extends JTextField {
     public final int row, col;
 
+    private final int size;
+
     private int val;
     private boolean isValid;
     private boolean isFinal;
 
-    public SquareTF(int row, int col) {
+    private AbstractDocument doc;
+
+    public SquareTF(int row, int col, int size) throws BadLocationException {
         super(); //why does it work even if i dont have this
 
         this.row = row;
         this.col = col;
 
+        this.size = size;
+
         this.val = 0;
         this.isValid = true;
         this.isFinal = false;
+
+        this.doc = (AbstractDocument) getDocument();
+        doc.setDocumentFilter(new SquareDocFilter(size));
 
         setEditable(true);
 
         setFormat();
     }
 
-    public SquareTF(int row, int col, int val) {
+    public SquareTF(int row, int col, int size, int val) {
         this.row = row;
         this.col = col;
+
+        this.size = size;
 
         this.val = val;
         this.isValid = true;
