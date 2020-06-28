@@ -14,6 +14,8 @@ public class SudokuGrid extends JPanel{
     //private JPanel boardPanel;
 
     public SudokuGrid(int size) throws BadLocationException {
+        super();
+
         this.grid = new JTextField[size][size];
         this.size = size;
         this.base = (int) Math.sqrt(size);
@@ -30,7 +32,6 @@ public class SudokuGrid extends JPanel{
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 JTextField square = new SquareTF(i, j, size);
-
                 grid[i][j] = square;
             }
         }

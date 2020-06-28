@@ -16,7 +16,7 @@ public class SquareTF extends JTextField {
 
     private AbstractDocument doc;
 
-    public SquareTF(int row, int col, int size) throws BadLocationException {
+    public SquareTF(int row, int col, int size) {
         super(); //why does it work even if i dont have this
 
         this.row = row;
@@ -33,20 +33,6 @@ public class SquareTF extends JTextField {
 
         setEditable(true);
 
-        setFormat();
-    }
-
-    public SquareTF(int row, int col, int size, int val) {
-        this.row = row;
-        this.col = col;
-
-        this.size = size;
-
-        this.val = val;
-        this.isValid = true;
-        this.isFinal = true;
-
-        setEditable(false);
         setFormat();
     }
 

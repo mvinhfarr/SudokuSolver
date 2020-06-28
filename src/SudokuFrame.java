@@ -15,7 +15,11 @@ public class SudokuFrame {
 
         this.grid = new SudokuGrid(9);
 
-        c.add(grid);
+        ButtonPanel buttons = new ButtonPanel(grid);
+
+
+        c.add(grid, BorderLayout.WEST);
+        c.add(buttons, BorderLayout.EAST);
 
         f.pack();
         f.setVisible(true);
