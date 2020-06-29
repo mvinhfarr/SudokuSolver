@@ -4,10 +4,12 @@ import java.security.Key;
 
 public class SquareKeyListener implements KeyListener {
     private SudokuGrid grid;
+    private SquareTF sq;
     private int size;
 
-    public SquareKeyListener(SudokuGrid grid) {
+    public SquareKeyListener(SudokuGrid grid, SquareTF sq) {
         this.grid = grid;
+        this.sq = sq;
         this.size = grid.size;
     }
 
@@ -18,13 +20,15 @@ public class SquareKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //handle arrowkeys
-        int[] set = new int[]{KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT,
-            KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D};
-        for(int c: set) {
-            if(e.getExtendedKeyCode() == c) {
-                grid.moveCursor((SquareTF) e.getSource(), e.getExtendedKeyCode());
-            }
+        //handle arrow keys
+        if(e.getExtendedKeyCode() == KeyEvent.VK_UP) {
+            grid.moveCursor((SquareTF) e.getSource(), 'N');
+        } else if(e.getExtendedKeyCode() == KeyEvent.VK_DOWN) {
+            grid.moveCursor((SquareTF) e.getSource(), 'S');
+        } else if(e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
+            grid.moveCursor((SquareTF) e.getSource(), 'W');
+        } else if(e.getExtendedKeyCode() == KeyEvent.VK_RIGHT) {
+            grid.moveCursor((SquareTF) e.getSource(), 'E');
         }
     }
 

@@ -10,6 +10,8 @@ public class SquareTF extends JTextField {
 
     private final int size;
 
+    private boolean inFocus;
+
     private int val;
     private boolean isValid;
     private boolean isFinal;
@@ -28,18 +30,18 @@ public class SquareTF extends JTextField {
         this.isValid = true;
         this.isFinal = false;
 
-        this.doc = (AbstractDocument) getDocument();
-        doc.setDocumentFilter(new SquareDocFilter(size));
-
+        //highlight square yellow when in focus
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                setBackground(Color.YELLOW);
+                setBackground(new Color(250, 225, 100));
+                inFocus = true;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 setBackground(Color.WHITE);
+                inFocus = false;
             }
         });
 

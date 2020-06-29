@@ -13,37 +13,44 @@ public class SudokuGrid extends JPanel{
     public final int size;
     public final int base;
 
+    private boolean baseTen;
+
     private JPanel[][] subGridPanels;
 
     public SudokuGrid(int size) throws BadLocationException {
         super();
 
         this.grid = new JTextField[size][size];
+
         this.sudoBoard = new int[size][size];
+
         this.size = size;
         this.base = (int) Math.sqrt(size);
+
+        this.baseTen = true;
 
         this.subGridPanels = new JPanel[base][base];
 
         setLayout(new GridLayout(base, base));
 
         initTFGrid();
-        initPanGrid();
-
-
+        initPanelGrid();
     }
 
     private void initTFGrid() throws BadLocationException {
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                JTextField square = new SquareTF(i, j, size);
-                square.addKeyListener(new SquareKeyListener(this));
+                SquareTF square = new SquareTF(i, j, size);
+                square.addKeyListener(new SquareKeyListener(this, square));
+
+                AbstractDocument doc = (AbstractDocument) square.getDocument();
+                doc.setDocumentFilter(new SquareDocFilter(this));
                 grid[i][j] = square;
             }
         }
     }
 
-    private void initPanGrid() {
+    private void initPanelGrid() {
         for(int i = 0; i < base; i++) {
             for(int j = 0; j < base; j++) {
                 JPanel subGrid = new JPanel(new GridLayout(base, base));
@@ -74,27 +81,35 @@ public class SudokuGrid extends JPanel{
         }
     }
 
-    public void moveCursor(SquareTF sq, int keyCode) {
-        if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
+    public void moveCursor(SquareTF sq, char dir) {
+        if(dir == 'N') {
             if(sq.row == 0)
                 grid[size-1][sq.col].requestFocus();
             else
                 grid[sq.row-1][sq.col].requestFocus();
-        } else if(keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
+        } else if(dir == 'S') {
             if(sq.row == size - 1)
                 grid[0][sq.col].requestFocus();
             else
                 grid[sq.row+1][sq.col].requestFocus();
-        } else if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
+        } else if(dir == 'W') {
             if(sq.col == 0)
                 grid[sq.row][size-1].requestFocus();
             else
                 grid[sq.row][sq.col-1].requestFocus();
-        } else if(keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-            if(sq.row == size - 1)
+        } else if(dir == 'S') {
+            if(sq.col == size - 1)
                 grid[sq.row][0].requestFocus();
             else
                 grid[sq.row][sq.col+1].requestFocus();
         }
+    }
+
+    public boolean getBaseTen() {
+        return baseTen;
+    }
+
+    public void setBaseTen(boolean bool) {
+        baseTen = bool;
     }
 }
