@@ -3,14 +3,15 @@ import javax.swing.border.Border;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class SudokuGrid extends JPanel{
     private JTextField[][] grid;
 
     private int[][] sudoBoard;
 
-    private final int size;
-    private final int base;
+    public final int size;
+    public final int base;
 
     private JPanel[][] subGridPanels;
 
@@ -36,6 +37,7 @@ public class SudokuGrid extends JPanel{
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 JTextField square = new SquareTF(i, j, size);
+                square.addKeyListener(new SquareKeyListener(this));
                 grid[i][j] = square;
             }
         }
@@ -69,6 +71,30 @@ public class SudokuGrid extends JPanel{
             for(int j = 0; j < size; j++) {
                 grid[i][j].setText("" + solvedSudo[i][j]);
             }
+        }
+    }
+
+    public void moveCursor(SquareTF sq, int keyCode) {
+        if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
+            if(sq.row == 0)
+                grid[size-1][sq.col].requestFocus();
+            else
+                grid[sq.row-1][sq.col].requestFocus();
+        } else if(keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
+            if(sq.row == size - 1)
+                grid[0][sq.col].requestFocus();
+            else
+                grid[sq.row+1][sq.col].requestFocus();
+        } else if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
+            if(sq.col == 0)
+                grid[sq.row][size-1].requestFocus();
+            else
+                grid[sq.row][sq.col-1].requestFocus();
+        } else if(keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
+            if(sq.row == size - 1)
+                grid[sq.row][0].requestFocus();
+            else
+                grid[sq.row][sq.col+1].requestFocus();
         }
     }
 }
