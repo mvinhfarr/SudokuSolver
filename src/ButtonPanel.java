@@ -8,8 +8,11 @@ public class ButtonPanel extends JPanel {
     private JButton initBoard, validate, restart, solve;
 
     public ButtonPanel(SudokuGrid grid) {
-        super(new BorderLayout());
-        setSize(150, 150);
+        super(new GridLayout(2,2,4,4));
+
+        Dimension buttonDim = new Dimension(40, 40);
+
+        setSize(buttonDim.width*2, buttonDim.height*2);
 
         this.grid = grid;
 
@@ -42,13 +45,19 @@ public class ButtonPanel extends JPanel {
         solve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                grid.solveSudo();
             }
         });
 
-        add(initBoard, BorderLayout.NORTH);
-        add(restart, BorderLayout.WEST);
-        add(validate, BorderLayout.EAST);
-        add(solve, BorderLayout.SOUTH);
+
+        initBoard.setPreferredSize(buttonDim);
+        restart.setPreferredSize(buttonDim);
+        validate.setPreferredSize(buttonDim);
+        solve.setPreferredSize(buttonDim);
+
+        add(initBoard);
+        add(restart);
+        add(validate);
+        add(solve);
     }
 }

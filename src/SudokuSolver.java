@@ -48,10 +48,18 @@ public class SudokuSolver {
         this.board = new int[size][size];
         this.solvedBoard = new int[size][size];
 
-        for(int i = 0; i < grid.length; i++) {
-             for(int j = 0; j < grid[0].length; j++) {
+        for(int i = 0; i < size; i++) {
+             for(int j = 0; j < size; j++) {
                  String s = grid[i][j].getText();
-                 System.out.print(s);
+                 try {
+                     int val = Integer.parseInt(s);
+                     board[i][j] = val;
+                 } catch (NumberFormatException e) {
+                     if(s == null) {
+                         board[i][j] = 0;
+                     }
+                 }
+
              }
          }
     }

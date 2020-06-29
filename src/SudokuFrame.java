@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class SudokuFrame {
     private JFrame f;
-    private SudokuGrid grid;
+    //private SudokuGrid grid;
 
     public SudokuFrame() throws BadLocationException {
         this.f = new JFrame("Sudoku Solver");
@@ -13,13 +13,13 @@ public class SudokuFrame {
 
         Container c = f.getContentPane();
 
-        this.grid = new SudokuGrid(9);
+        //JPanel container = new JPanel(new BoxLayout())
 
+        SudokuGrid grid = new SudokuGrid(9);
         ButtonPanel buttons = new ButtonPanel(grid);
 
-
-        c.add(grid, BorderLayout.WEST);
-        c.add(buttons, BorderLayout.EAST);
+        c.add(grid, BorderLayout.CENTER);
+        c.add(buttons, BorderLayout.SOUTH);
 
         f.pack();
         f.setVisible(true);
