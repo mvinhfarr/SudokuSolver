@@ -15,7 +15,7 @@ public class SudokuFrame {
 
         //JPanel container = new JPanel(new BoxLayout())
 
-        SudokuGrid grid = new SudokuGrid(9);
+        SudokuGrid grid = new SudokuGrid(16);
         ButtonPanel buttons = new ButtonPanel(grid);
 
         c.add(grid, BorderLayout.CENTER);
