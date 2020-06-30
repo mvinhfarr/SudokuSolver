@@ -17,24 +17,30 @@ public class SquareDocFilter extends DocumentFilter {
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         if(string == null) return;
 
-        String newVal = testEntry(fb.getDocument().getText(0, fb.getDocument().getLength()), string);
-        remove(fb, offset, 0);
-        super.insertString(fb, offset, newVal, attr);
+        int currentLen = fb.getDocument().getLength();
+
+        String newVal = testEntry("", string);
+
+        remove(fb, 0, currentLen);
+        super.insertString(fb, 0, newVal, attr);
     }
 
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
         if(text == null) return;
 
-        String newVal = testEntry(fb.getDocument().getText(0, fb.getDocument().getLength()), text);
-        remove(fb, offset, length);
-        super.replace(fb, offset, length, newVal, attrs);
+        int currentLen = fb.getDocument().getLength();
+        String currentStr = fb.getDocument().getText(0, currentLen);
+
+        String newVal = testEntry(currentStr, text);
+
+        remove(fb, 0, currentLen);
+        super.replace(fb, 0, length, newVal, attrs);
     }
 
     @Override
     public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-        //System.out.println("remove");
-        super.remove(fb, fb.getDocument().getLength() - 1, fb.getDocument().getLength());
+        super.remove(fb, offset, length);
     }
 
     private String testEntry(String current, String newStr) {
@@ -57,6 +63,7 @@ public class SquareDocFilter extends DocumentFilter {
             else throw new NumberFormatException();
         } catch (NumberFormatException e) {
             //include check for base 16 & 25
+            System.out.println(s + " " + base);
             return "";
         }
     }

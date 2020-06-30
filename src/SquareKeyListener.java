@@ -4,13 +4,9 @@ import java.security.Key;
 
 public class SquareKeyListener implements KeyListener {
     private SudokuGrid grid;
-    private SquareTF sq;
-    private int size;
 
-    public SquareKeyListener(SudokuGrid grid, SquareTF sq) {
+    public SquareKeyListener(SudokuGrid grid) {
         this.grid = grid;
-        this.sq = sq;
-        this.size = grid.size;
     }
 
     @Override

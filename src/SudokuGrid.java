@@ -41,7 +41,7 @@ public class SudokuGrid extends JPanel{
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 SquareTF square = new SquareTF(i, j, size);
-                square.addKeyListener(new SquareKeyListener(this, square));
+                square.addKeyListener(new SquareKeyListener(this));
 
                 AbstractDocument doc = (AbstractDocument) square.getDocument();
                 doc.setDocumentFilter(new SquareDocFilter(this));
@@ -97,7 +97,7 @@ public class SudokuGrid extends JPanel{
                 grid[sq.row][size-1].requestFocus();
             else
                 grid[sq.row][sq.col-1].requestFocus();
-        } else if(dir == 'S') {
+        } else if(dir == 'E') {
             if(sq.col == size - 1)
                 grid[sq.row][0].requestFocus();
             else
@@ -111,5 +111,6 @@ public class SudokuGrid extends JPanel{
 
     public void setBaseTen(boolean bool) {
         baseTen = bool;
+        System.out.println(baseTen);
     }
 }
