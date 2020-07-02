@@ -43,14 +43,12 @@ public class SquareDocFilter extends DocumentFilter {
 
     private String testEntry(String current, String newStr) {
         String s;
-        int base;
+        int base = grid.getNumBase();
 
-        if(grid.getBaseTen()) { //squares read in base ten
+        if(base == 10) { //squares read in base ten
             s = current+newStr;
-            base = 10;
         } else { //size == 4 || 5 and not in base ten
             s = newStr;
-            base = size+1; //because we reserve 0 as a blank value
         }
 
         try {

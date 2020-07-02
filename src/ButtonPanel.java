@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 
@@ -13,14 +14,20 @@ public class ButtonPanel extends JPanel {
         JButton restart = new JButton("Restart");
         JButton solve = new JButton("Solve");
         JButton validate = new JButton("Validate");
-        JCheckBox baseTen = new JCheckBox("Base Ten", grid.getBaseTen());
+        JCheckBox baseTen = new JCheckBox("Base Ten", (grid.getNumBase() == 10));
 
         restart.addActionListener(e -> {
 
         });
 
         solve.addActionListener(
-                e -> grid.solveSudo()
+                e -> {
+                    try {
+                        grid.solveSudo();
+                    } catch (BadLocationException badLocationException) {
+                        badLocationException.printStackTrace();
+                    }
+                }
         );
 
         validate.addActionListener(e -> {
@@ -28,7 +35,7 @@ public class ButtonPanel extends JPanel {
         });
 
         baseTen.addItemListener(
-                e -> grid.setBaseTen(e.getStateChange() == ItemEvent.SELECTED)
+                e -> grid.setNumBase(e.getStateChange() == ItemEvent.SELECTED)
         );
 
 

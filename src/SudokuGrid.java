@@ -1,15 +1,17 @@
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 
 public class SudokuGrid extends JPanel{
     private final JTextField[][] grid;
 
-    private int[][] sudoBoard;
+    private SudokuSolver sudo;
+    //private int[][] sudoBoard;
 
     public final int size;
     public final int base;
 
-    private boolean baseTen;
+    private int numBase;
 
     private final JPanel[][] subGridPanels;
 
@@ -19,13 +21,14 @@ public class SudokuGrid extends JPanel{
         this.grid = new JTextField[size][size];
 
         //not inplemented yet
-        this.sudoBoard = new int[size][size];
+        this.sudo = new SudokuSolver(this.grid);
+        //this.sudoBoard = new int[size][size];
 
         this.size = size;
         this.base = (int) Math.sqrt(size);
 
-        //initiate the board not in base ten
-        this.baseTen = false;
+        //initiate the board not in base = size + 1 (0 for unfilled)
+        this.numBase = size+1;
 
         //JPanel Array to hold each base X base subgrid
         this.subGridPanels = new JPanel[base][base];
@@ -64,19 +67,6 @@ public class SudokuGrid extends JPanel{
         }
     }
 
-    public void solveSudo() {
-        SudokuSolver sudo = new SudokuSolver(grid);
-        sudo.solveWithAlgorithmX();
-
-        int[][] solvedSudo = sudo.getSolvedBoard();
-
-        for(int i = 0; i < size; i ++) {
-            for(int j = 0; j < size; j++) {
-                grid[i][j].setText("" + solvedSudo[i][j]);
-            }
-        }
-    }
-
     public void moveCursor(SquareTF sq, char dir) {
         if(dir == 'N') {
             if(sq.row == 0)
@@ -101,10 +91,44 @@ public class SudokuGrid extends JPanel{
         }
     }
 
-    public void setBaseTen(boolean bool) {
-        baseTen = bool;
+    public void setNumBase(boolean b) {
+        numBase = b ? 10 : size+1;
     }
-    public boolean getBaseTen() {
-        return baseTen;
+    public int getNumBase() {
+        return numBase;
+    }
+
+    public void solveSudo() throws BadLocationException {
+        updateSolver();
+        sudo.solveWithAlgorithmX();
+
+        int[][] solvedSudo = sudo.getSolvedBoard();
+
+        for(int i = 0; i < size; i ++) {
+            for(int j = 0; j < size; j++) {
+                String s = Integer.toString(solvedSudo[i][j], numBase);
+                grid[i][j].getDocument().insertString(0, s, null);
+            }
+        }
+    }
+
+    private void updateSolver() {
+        int[][] board = new int[size][size];
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                String s = grid[i][j].getText();
+                try {
+                    int val = Integer.parseInt(s, numBase);
+                    board[i][j] = val;
+                } catch (NumberFormatException e) {
+                    if(s == null) {
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        }
+
+        sudo.setBoard(board);
     }
 }
+
