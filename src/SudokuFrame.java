@@ -1,17 +1,15 @@
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 
-public class SudokuFrame {
-    private JFrame f;
+public class SudokuFrame extends JFrame{
     //private SudokuGrid grid;
 
-    public SudokuFrame() throws BadLocationException {
-        this.f = new JFrame("Sudoku Solver");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(600, 600);
+    public SudokuFrame() {
+        super("Sudoku Solver");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 600);
 
-        Container c = f.getContentPane();
+        Container c = getContentPane();
 
         //JPanel container = new JPanel(new BoxLayout())
 
@@ -21,11 +19,11 @@ public class SudokuFrame {
         c.add(grid, BorderLayout.CENTER);
         c.add(buttons, BorderLayout.SOUTH);
 
-        f.pack();
-        f.setVisible(true);
+        pack();
     }
 
-    public static void main(String[] args) throws BadLocationException {
+    public static void main(String[] args) {
         SudokuFrame sf = new SudokuFrame();
+        sf.setVisible(true);
     }
 }

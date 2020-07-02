@@ -1,15 +1,15 @@
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import java.awt.event.KeyEvent;
 
 public class SquareDocFilter extends DocumentFilter {
-    private SudokuGrid grid;
-    private int size;
+    private final SudokuGrid grid;
+    private final int size;
 
-    public SquareDocFilter(SudokuGrid grid) {
+    public SquareDocFilter(SquareTF sq) {
         super();
-        this.grid = grid;
+
+        this.grid = sq.getParentGrid();
         this.size = grid.size;
     }
 
@@ -38,31 +38,27 @@ public class SquareDocFilter extends DocumentFilter {
 
     @Override
     public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-        super.remove(fb, fb.getDocument().getLength(), length);
+        super.remove(fb, 0, fb.getDocument().getLength());
     }
 
     private String testEntry(String current, String newStr) {
         String s;
         int base;
 
-        if(grid.getBaseTen()) { //squares read only in base ten
-            s = current;
-            s += newStr;
+        if(grid.getBaseTen()) { //squares read in base ten
+            s = current+newStr;
             base = 10;
-        } else { //squares read in base = size
+        } else { //size == 4 || 5 and not in base ten
             s = newStr;
-            s.toUpperCase();
             base = size+1; //because we reserve 0 as a blank value
-        };
+        }
 
         try {
             int val = Integer.parseInt(s, base);
 
-            if(val > 0 && val <= size) return s;
+            if(val > 0 && val <= size) return s.toUpperCase();
             else throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            //include check for base 16 & 25
-            System.out.println(s + " " + base);
             return null;
         }
     }

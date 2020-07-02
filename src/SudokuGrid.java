@@ -1,12 +1,8 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class SudokuGrid extends JPanel{
-    private JTextField[][] grid;
+    private final JTextField[][] grid;
 
     private int[][] sudoBoard;
 
@@ -15,20 +11,23 @@ public class SudokuGrid extends JPanel{
 
     private boolean baseTen;
 
-    private JPanel[][] subGridPanels;
+    private final JPanel[][] subGridPanels;
 
-    public SudokuGrid(int size) throws BadLocationException {
+    public SudokuGrid(int size) {
         super();
 
         this.grid = new JTextField[size][size];
 
+        //not inplemented yet
         this.sudoBoard = new int[size][size];
 
         this.size = size;
         this.base = (int) Math.sqrt(size);
 
-        this.baseTen = true;
+        //initiate the board not in base ten
+        this.baseTen = false;
 
+        //JPanel Array to hold each base X base subgrid
         this.subGridPanels = new JPanel[base][base];
 
         setLayout(new GridLayout(base, base));
@@ -37,14 +36,11 @@ public class SudokuGrid extends JPanel{
         initPanelGrid();
     }
 
-    private void initTFGrid() throws BadLocationException {
+    private void initTFGrid() {
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                SquareTF square = new SquareTF(i, j, size);
-                square.addKeyListener(new SquareKeyListener(this));
+                SquareTF square = new SquareTF(this, i, j);
 
-                AbstractDocument doc = (AbstractDocument) square.getDocument();
-                doc.setDocumentFilter(new SquareDocFilter(this));
                 grid[i][j] = square;
             }
         }
@@ -105,12 +101,10 @@ public class SudokuGrid extends JPanel{
         }
     }
 
-    public boolean getBaseTen() {
-        return baseTen;
-    }
-
     public void setBaseTen(boolean bool) {
         baseTen = bool;
-        System.out.println(baseTen);
+    }
+    public boolean getBaseTen() {
+        return baseTen;
     }
 }

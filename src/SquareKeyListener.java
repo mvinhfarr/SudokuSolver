@@ -1,12 +1,11 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 public class SquareKeyListener implements KeyListener {
-    private SudokuGrid grid;
+    private final SudokuGrid grid;
 
-    public SquareKeyListener(SudokuGrid grid) {
-        this.grid = grid;
+    public SquareKeyListener(SquareTF sq) {
+        this.grid = sq.getParentGrid();
     }
 
     @Override

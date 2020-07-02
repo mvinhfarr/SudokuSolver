@@ -1,15 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class ButtonPanel extends JPanel {
-    private SudokuGrid grid;
-    private JButton restart, solve;
-    private JButton validate;
-    private JCheckBox baseTen;
-
     public ButtonPanel(SudokuGrid grid) {
         super(new GridLayout(2,2,4,4));
 
@@ -17,27 +10,26 @@ public class ButtonPanel extends JPanel {
 
         setSize(buttonDim.width*2, buttonDim.height*2);
 
-        this.grid = grid;
+        JButton restart = new JButton("Restart");
+        JButton solve = new JButton("Solve");
+        JButton validate = new JButton("Validate");
+        JCheckBox baseTen = new JCheckBox("Base Ten", grid.getBaseTen());
 
-        this.restart = new JButton("Restart");
-        this.solve = new JButton("Solve");
-        this.validate = new JButton("Validate");
-        this.baseTen = new JCheckBox("Base Ten", true);
+        restart.addActionListener(e -> {
 
-        restart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
         });
 
-        solve.addActionListener(e -> grid.solveSudo());
+        solve.addActionListener(
+                e -> grid.solveSudo()
+        );
 
         validate.addActionListener(e -> {
 
         });
 
-        baseTen.addItemListener(e -> grid.setBaseTen(e.getStateChange() == ItemEvent.SELECTED));
+        baseTen.addItemListener(
+                e -> grid.setBaseTen(e.getStateChange() == ItemEvent.SELECTED)
+        );
 
 
         restart.setPreferredSize(buttonDim);
