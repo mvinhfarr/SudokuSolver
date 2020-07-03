@@ -1,5 +1,5 @@
 # SudokuSolver
-Simple sudoku solver
+Simple sudoku solver (unfinished)
 
-Test algorithm speeds
+Test algorithm speeds.
 Efficient but simple GUI
