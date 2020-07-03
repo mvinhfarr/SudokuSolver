@@ -1,7 +1,7 @@
 public class BruteForceSolver {
     private int[][] board;
-    private final int SIZE;
-    private final int BASE;
+    private final int size;
+    private final int base;
 
     private int[][] solved;
 
@@ -12,8 +12,8 @@ public class BruteForceSolver {
 
     public BruteForceSolver(int [][] board) {
         this.board = board;
-        this.SIZE = board.length;
-        this.BASE = (int) Math.sqrt(SIZE);
+        this.size = board.length;
+        this.base = (int) Math.sqrt(size);
 
         this.solved = int2dArrDeepCopy(board);
 
@@ -24,8 +24,8 @@ public class BruteForceSolver {
     }
 
     public void solve() {
-        while(row < SIZE) {
-            while(col < SIZE) {
+        while(row < size) {
+            while(col < size) {
                 if(board[row][col] == 0) { //current square unknown
                     int temp;
                     if(valid) { //current state valid
@@ -37,9 +37,9 @@ public class BruteForceSolver {
                     if(temp == -1) { //no valid possibilities
                         valid = false;
                         if(col == 0) { //if last square is in previous row
-                            lastVal = solved[row-1][SIZE-1];
+                            lastVal = solved[row-1][size -1];
                             solved[row][col] = 0;
-                            col = SIZE-1;
+                            col = size -1;
                             row--;
                         } else { //last square in current row
                             lastVal = solved[row][col-1];
@@ -55,8 +55,8 @@ public class BruteForceSolver {
                 } else { //current square known
                     if(!valid) {
                         if(col == 0) {
-                            lastVal = solved[row - 1][SIZE-1];
-                            col = SIZE-1;
+                            lastVal = solved[row - 1][size -1];
+                            col = size -1;
                             row--;
                         } else {
                             lastVal = solved[row][col-1];
@@ -83,47 +83,13 @@ public class BruteForceSolver {
         return false;
     }
 
-    //returns true if current row in solved contains val
-    private boolean checkRow(int val) {
-        return checkArr(solved[row], val);
-    }
-
-    //returns true if current col in solved contains val
-    private boolean checkColumn(int val) {
-        int[] tempCol = new int[SIZE];
-
-        for(int i = 0; i < SIZE; i++) {
-            tempCol[i] = solved[i][col];
-        }
-
-        return checkArr(tempCol, val);
-    }
-
-    //returns true if current subSquare that current row & col are in contains val
-    private boolean checkSquare(int val) {
-        int[] subSquare = new int[SIZE];
-
-        int startRow = row/BASE*BASE;
-        int startCol = col/BASE*BASE;
-
-        int n = 0;
-        for(int i = 0; i < BASE; i++) {
-            for(int j = 0; j < BASE; j++) {
-                subSquare[n] = solved[startRow + i][startCol + j];
-                n++;
-            }
-        }
-
-        return checkArr(subSquare, val);
-    }
-
     //fill current square (row, col) with a possibility
-    //checks startPoint < i < SIZE
+    //checks startPoint < i < size
     private int fillSquare(int startPoint) {
-        for(int i = startPoint; i <= SIZE; i++) {
-            if(!checkRow(i))
-                if(!checkColumn(i))
-                    if(!checkSquare(i))
+        for(int i = startPoint; i <= size; i++) {
+            if(!checkRow(solved, row, i))
+                if(!checkColumn(solved, col, i))
+                    if(!checkSquare(solved, row, col, i))
                         return i; //if no conflicts
         }
         return -1; //return -1 if no there are no valid possibilities
@@ -142,5 +108,41 @@ public class BruteForceSolver {
             System.arraycopy(a[i], 0, copy[i], 0, tempLength);
         }
         return copy;
+    }
+
+    //returns true if current row in solved contains val
+    public static boolean checkRow(int[][] board, int row, int val) {
+        return checkArr(board[row], val);
+    }
+
+    //returns true if current col in solved contains val
+    public static boolean checkColumn(int[][] board, int col, int val) {
+        int[] tempCol = new int[board.length];
+
+        for(int i = 0; i < board.length; i++) {
+            tempCol[i] = board[i][col];
+        }
+
+        return checkArr(tempCol, val);
+    }
+
+    //returns true if current subSquare that current row & col are in contains val
+    public static boolean checkSquare(int[][] board, int row, int col, int val) {
+        int base = (int) Math.sqrt(board.length);
+
+        int[] subSquare = new int[board.length];
+
+        int startRow = row/ base * base;
+        int startCol = col/ base * base;
+
+        int n = 0;
+        for(int i = 0; i < base; i++) {
+            for(int j = 0; j < base; j++) {
+                subSquare[n] = board[startRow + i][startCol + j];
+                n++;
+            }
+        }
+
+        return checkArr(subSquare, val);
     }
 }

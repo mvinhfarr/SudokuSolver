@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SudokuSolver {
@@ -170,6 +171,27 @@ public class SudokuSolver {
         solvedBoard = bfs.getSolved();
     }
 
+    public ArrayList<int[]> validate() {
+        ArrayList<int[]> badCells = new ArrayList<>();
+
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                if(board[i][j] == 0) continue;
+
+                //THIS IS TERRIBLE GARBAGE!!!
+                //PLEASE I'M BEGGING MYSELF, CHANGE IT
+                int val = board[i][j];
+                board[i][j] = 0;
+                if(BruteForceSolver.checkRow(board, i, val) ||
+                   BruteForceSolver.checkColumn(board, j, val) ||
+                   BruteForceSolver.checkSquare(board, i, j, val))
+                    badCells.add(new int[]{i, j});
+                board[i][j] = val;
+            }
+        }
+
+        return badCells;
+    }
 
     public void setBoard(int[][] board) {
         this.board = board;

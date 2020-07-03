@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class SudokuGrid extends JPanel{
     private final JTextField[][] grid;
@@ -112,8 +113,19 @@ public class SudokuGrid extends JPanel{
         }
     }
 
+    public void validate() {
+        updateSolver();
+
+        ArrayList<int[]> badCells = sudo.validate();
+
+        for(int[] cell: badCells) {
+            grid[cell[0]][cell[1]].setBackground(new Color(255, 0, 0));
+        }
+    }
+
     private void updateSolver() {
         int[][] board = new int[size][size];
+        //board = sudo.getBoard();
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
                 String s = grid[i][j].getText();

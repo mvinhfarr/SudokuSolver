@@ -30,9 +30,9 @@ public class ButtonPanel extends JPanel {
                 }
         );
 
-        validate.addActionListener(e -> {
-
-        });
+        validate.addActionListener(
+                e -> grid.validate()
+        );
 
         baseTen.addItemListener(
                 e -> grid.setNumBase(e.getStateChange() == ItemEvent.SELECTED)
